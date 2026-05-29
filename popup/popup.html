@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PhishEye</title>
+
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>PhishEye 👁️</h1>
+
+    <p class="subtitle">
+      Browser phishing detection system
+    </p>
+
+    <div class="status safe" id="statusBox">
+      SAFE
+    </div>
+
+    <div class="score-box">
+      <p>Safety Score</p>
+      <span id="score">100</span>
+    </div>
+
+    <button id="scanBtn">
+      Scan Website
+    </button>
+
+    <div id="results"></div>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
