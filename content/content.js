@@ -31,6 +31,8 @@ function scanPage() {
 
   });
 
+
+
   if (passwordFields.length > 0) {
 
     findings.push(
@@ -42,7 +44,9 @@ function scanPage() {
   chrome.storage.local.set({
     pageFindings: findings
   });
-
+  
+console.log("PhishEye Content Scanner Running");
+console.log("Findings:", findings);
 }
 
 scanPage();
