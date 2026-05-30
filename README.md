@@ -37,7 +37,7 @@ PhishEye is a Chrome extension designed to identify potentially malicious websit
 
 ### Danger Scan
 
-![Danger Scan](Screenshots/danger-scan.png)
+![Danger Scan](Screenshots/danger_scan.png)
 
 ## Installation
 
