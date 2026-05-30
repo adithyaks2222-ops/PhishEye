@@ -1,69 +1,114 @@
+import {
+  suspiciousTLDs,
+  protectedBrands,
+  urlShorteners
+} from "./threatDatabase.js";
+
+import { applyPenalty } from "./scoringEngine.js";
+
 export function analyzeURL(url) {
 
   let score = 100;
 
   let warnings = [];
 
-  // Detect insecure HTTP
+  // HTTP
   if (url.startsWith("http://")) {
-    score -= 30;
+    score = applyPenalty(score, 30);
 
     warnings.push(
-      "Website is using insecure HTTP connection."
+      "Insecure HTTP connection detected."
     );
   }
 
-  // Detect suspicious keywords
-  const suspiciousKeywords = [
-    "login",
-    "verify",
-    "secure",
-    "account",
-    "banking",
-    "update"
-  ];
+  // IP Address URL
+  const ipRegex =
+    /(https?:\/\/)?(\d{1,3}\.){3}\d{1,3}/;
 
-  suspiciousKeywords.forEach(keyword => {
+  if (ipRegex.test(url)) {
 
-    if (url.toLowerCase().includes(keyword)) {
+    score = applyPenalty(score, 25);
 
-      score -= 10;
+    warnings.push(
+      "IP-based URL detected."
+    );
+  }
+
+  // Long URL
+  if (url.length > 100) {
+
+    score = applyPenalty(score, 15);
+
+    warnings.push(
+      "Unusually long URL detected."
+    );
+  }
+
+  // Suspicious TLD
+  suspiciousTLDs.forEach(tld => {
+
+    if (url.includes(tld)) {
+
+      score = applyPenalty(score, 20);
 
       warnings.push(
-        `Suspicious keyword detected: ${keyword}`
+        `Suspicious TLD detected: ${tld}`
       );
     }
 
   });
 
-  // Detect suspicious symbols
-  if (url.includes("@")) {
+  // URL Shorteners
+  urlShorteners.forEach(service => {
 
-    score -= 20;
+    if (url.includes(service)) {
 
-    warnings.push(
-      "URL contains suspicious @ symbol."
-    );
-  }
+      score = applyPenalty(score, 25);
 
-  // Detect excessive hyphens
-  const hyphenCount = (url.match(/-/g) || []).length;
+      warnings.push(
+        `URL shortener detected: ${service}`
+      );
+    }
 
-  if (hyphenCount >= 3) {
+  });
 
-    score -= 15;
+  // Brand impersonation
+  protectedBrands.forEach(brand => {
 
-    warnings.push(
-      "URL contains excessive hyphens."
-    );
-  }
+    if (
+      url.toLowerCase().includes(brand) &&
+      !url.includes(`${brand}.com`)
+    ) {
 
-  // Prevent negative score
-  if (score < 0) {
-    score = 0;
-  }
+      score = applyPenalty(score, 25);
 
-  // Determine status
+      warnings.push(
+        `Possible impersonation of ${brand}`
+      );
+    }
+
+  });
+
+  // Subdomain count
+  try {
+
+    const hostname =
+      new URL(url).hostname;
+
+    const subdomains =
+      hostname.split(".").length;
+
+    if (subdomains > 4) {
+
+      score = applyPenalty(score, 15);
+
+      warnings.push(
+        "Excessive subdomains detected."
+      );
+    }
+
+  } catch {}
+
   let status = "SAFE";
 
   if (score < 80) {
