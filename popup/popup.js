@@ -20,7 +20,24 @@ scanBtn.addEventListener("click", async () => {
   let score = 100;
 
   let warnings = [];
+  const stored =
+  await chrome.storage.local.get(
+    "pageFindings"
+  );
 
+const pageFindings =
+  stored.pageFindings || [];
+  for (const finding of pageFindings) {
+
+  if (finding.includes("Password fields")) {
+    score -= 15;
+  }
+
+  if (finding.includes("Suspicious keyword")) {
+    score -= 10;
+  }
+
+}
   // Rule 1
   if (url.startsWith("http://")) {
     score -= 30;
@@ -89,23 +106,29 @@ scanBtn.addEventListener("click", async () => {
   }
 
   // Show warnings
-  if (warnings.length === 0) {
+  const allWarnings = [
+  ...warnings,
+  ...pageFindings
+];
 
-    resultsElement.innerHTML = `
-      ✅ No suspicious indicators detected.
-    `;
+if (allWarnings.length === 0) {
 
-  } else {
+  resultsElement.innerHTML = `
+    ✅ No suspicious indicators detected.
+  `;
 
-    resultsElement.innerHTML = `
-      <strong>Detected Warnings:</strong>
-      <br><br>
-      ${warnings.join("<br>")}
-    `;
+} else {
 
-  }
+  resultsElement.innerHTML = `
+    <strong>Detected Warnings:</strong>
+    <br><br>
+    ${allWarnings.join("<br>")}
+  `;
+
+}
 
   console.log("Final Score:", score);
   console.log("Warnings:", warnings);
+  console.log("Page Findings:", pageFindings);
 
 });

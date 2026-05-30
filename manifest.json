@@ -3,7 +3,13 @@
   "name": "PhishEye",
   "version": "0.1.0",
   "description": "Browser phishing detection extension under the JARVX cybersecurity ecosystem.",
-
+   
+   "content_scripts": [
+   {
+    "matches": ["<all_urls>"],
+    "js": ["content/content.js"]
+   }],
+   
   "permissions": [
     "activeTab",
     "tabs",
