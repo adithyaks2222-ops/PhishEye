@@ -4,26 +4,32 @@ Browser phishing detection extension under the JARVX cybersecurity ecosystem.
 
 ## Overview
 
-PhishEye is a Chrome extension designed to identify potentially malicious websites using URL analysis and phishing heuristics. It helps users detect suspicious links before entering sensitive information.
+PhishEye is a Chrome Extension that helps users identify potentially malicious websites through URL intelligence and webpage content analysis. It evaluates phishing indicators, calculates a threat score, and classifies websites as Safe, Warning, or Danger.
 
 ## Features
 
-### Phase 1
+### Phase 1 — Foundation ✅
 
 * URL scanning
-* Safety scoring system
+* Threat scoring system
 * HTTP detection
 * Suspicious keyword detection
-* Threat classification (Safe, Warning, Danger)
+* Safety classification
 
-### Phase 2
+### Phase 2 — Advanced URL Intelligence ✅
 
 * IP address URL detection
 * Suspicious TLD detection
 * Brand impersonation detection
 * URL shortener detection
 * Excessive subdomain detection
-* Improved threat scoring
+
+### Phase 3 — Page Content Analysis ✅
+
+* Password field detection
+* Credential harvesting keyword detection
+* Content-based threat scoring
+* URL + webpage intelligence integration
 
 ## Screenshots
 
@@ -37,7 +43,7 @@ PhishEye is a Chrome extension designed to identify potentially malicious websit
 
 ### Danger Scan
 
-![Danger Scan](Screenshots/danger_scan.png)
+![Danger Scan](Screenshots/danger-scan.png)
 
 ## Installation
 
@@ -47,7 +53,7 @@ PhishEye is a Chrome extension designed to identify potentially malicious websit
 git clone https://github.com/adithyaks2222-ops/PhishEye.git
 ```
 
-2. Open Chrome and navigate to:
+2. Open Chrome
 
 ```txt
 chrome://extensions
@@ -55,45 +61,68 @@ chrome://extensions
 
 3. Enable Developer Mode
 
-4. Click "Load unpacked"
+4. Click **Load unpacked**
 
-5. Select the PhishEye project folder
+5. Select the PhishEye folder
 
-## Project Structure
+## Current Architecture
 
 ```txt
-PhishEye/
-│
-├── popup/
-│   ├── popup.html
-│   ├── popup.css
-│   └── popup.js
-│
-├── utils/
-│   └── urlAnalyzer.js
-│
-├── Screenshots/
-│
-├── manifest.json
-└── README.md
+Website
+   │
+   ▼
+Content Scanner
+   │
+   ▼
+Page Analysis
+   │
+   ▼
+URL Analysis
+   │
+   ▼
+Threat Score Engine
+   │
+   ▼
+SAFE / WARNING / DANGER
 ```
+
+## Version History
+
+### v0.1.0-alpha
+
+* Initial extension foundation
+* Basic URL analysis
+* Threat scoring engine
+
+### v0.2.0-alpha
+
+* Advanced URL intelligence
+* Brand impersonation detection
+* Suspicious TLD analysis
+* IP URL detection
+
+### v0.3.0-alpha
+
+* Page content analysis
+* Password field detection
+* Phishing keyword detection
+* Combined threat scoring
 
 ## Roadmap
 
-### Completed
+### Phase 4 🚧
 
-* Phase 1: Extension Foundation
-* Phase 2: Advanced URL Intelligence
+* Threat Intelligence Engine
+* Weighted risk calculation
+* False-positive reduction
+* Risk explanation system
 
-### In Progress
+### Future
 
-* Phase 3: Webpage Content Analysis
-
-### Planned
-
-* Threat Intelligence APIs
-* On-page Warning Overlays
-* AI Threat Explanations
+* On-page warning overlays
+* Threat intelligence API integration
+* Security dashboard
+* AI-powered threat explanations
 
 ## Tech Stack
 
@@ -105,6 +134,3 @@ PhishEye/
 ## License
 
 MIT License
-
-```
-```
